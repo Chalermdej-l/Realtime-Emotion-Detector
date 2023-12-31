@@ -10,3 +10,6 @@
 */**/*.mp4
 */**/*.avi
 */**/*.tflite
+*/**/*.hcl
+*/**/*.tfstate*
+*/**/.terraform
