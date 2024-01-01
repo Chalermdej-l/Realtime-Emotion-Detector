@@ -41,32 +41,8 @@ module "function" {
 
 # --output
 
-output "resource_group_name" {
-  value = module.resourcegroup.resource_group_name
-}
 
-output "resource_group_region" {
-  value = module.resourcegroup.resource_group_region
-}
 
-output "registry_name" {
-    value = module.dockerregis.registry_name
+output "function_endpoint" {
+  value = module.function.functionurl
 }
-output "registry_endpoint" {
-    value = module.dockerregis.registry_endpoint
-}
-
-output "container_name" {
-  value = module.blob.container_name
-}
-output "connection_string" {
-  value = module.blob.connection_string
-  sensitive = true
-}
-output "function_key" {
-  value = module.blob.function_key
-  sensitive = true
-}
-# output "function_endpoint" {
-#   value = module.function.functionurl
-# }

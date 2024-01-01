@@ -19,14 +19,14 @@ docker-run:
 	docker run -d -i --rm -p 8080:8080 ${IMAGE_NAME}
 
 docker-build:
-	docker build -f ./docker/base.Dockerfile -t baseimage .
+	# docker build -f ./docker/base.Dockerfile -t baseimage .
 	docker build -f ./docker/model.Dockerfile -t ${CONTAINER_NAME}.azurecr.io/${IMAGE_NAME} .
 
 docker-tag:
 	docker tag ${CONTAINER_NAME}.azurecr.io/${IMAGE_NAME}
 
 az-login:
-	az login	
+	az login -o None
 
 docker-push:
 	docker push ${CONTAINER_NAME}.azurecr.io/${IMAGE_NAME}
@@ -34,7 +34,7 @@ docker-push:
 docker-prune:
 	docker system prune --force
 
-dockerdeploy:
+docker-deploy:
 	az acr login --name ${CONTAINER_NAME}
 	docker push ${CONTAINER_NAME}.azurecr.io/${CONTAINER_IMAGE}${IMAGE_NAME}
 
@@ -51,6 +51,13 @@ infra-down-c:
 
 infra-create:
 	terraform -chdir=./infra apply -var-file=variables.tfvars -auto-approve
+
+infra-create-regis:
+	terraform -chdir=./infra apply -target=module.resourcegroup -target=module.dockerregis -var-file=variables.tfvars -auto-approve
+
+infra-create-func:
+	terraform -chdir=./infra apply -target=module.blob -target=module.function -var-file=variables.tfvars -auto-approve
+
 
 infra-output:
 	# EVENT_HUB_CONNECTION_PRODUCER_SEND_KEY
