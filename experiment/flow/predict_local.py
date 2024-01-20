@@ -5,7 +5,7 @@ import os
 import glob
 import argparse
 
-from keras.preprocessing.image import img_to_array
+from tensorflow.keras.utils import img_to_array 
 from tensorflow import keras
 
 
