@@ -14,15 +14,13 @@ def load_tflite_model(model_path):
 def inference_tflite_model(interpreter, input_data):
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
-
-    # Assuming the input shape is (batch_size, height, width, channels)
     input_data = input_data.reshape(input_details[0]['shape'])
-
     interpreter.set_tensor(input_details[0]['index'], input_data)
     interpreter.invoke()
 
     output_data = interpreter.get_tensor(output_details[0]['index'])
-   
+    return output_data
+
 def img_toarray(img,type):   
     x = np.asarray(img, dtype="float32")
     if type=='rgb':
@@ -34,26 +32,20 @@ def img_toarray(img,type):
 
 def preprocess_frame(data):
     input_mood = cv2.resize(data, dsize=(48,48))
-    input_mood = cv2.cvtColor(input_mood,cv2.COLOR_BGR2GRAY).astype("float") / 255.0
-    input_age = cv2.resize(data, dsize=(200,200)).astype("float") / 255.0
-    input_gender = cv2.resize(data, dsize=(110,90)).astype("float") / 255.0
-
+    input_mood = cv2.cvtColor(input_mood,cv2.COLOR_BGR2GRAY).astype("float") / 255.0 
     input_mood = img_toarray(input_mood,'grey')
-    input_age = img_toarray(input_age,'rgb')
-    input_gender = img_toarray(input_gender,'rgb')
-
-
-    return input_mood,input_age,input_gender
+    return input_mood
 
 def detectface(model_path):
     detector = cv2.CascadeClassifier(model_path)
     return detector
 
 
-def process_data(data,age_model,mood_model,detector,img_height=255,img_size=400):
+def process_data(data,mood_model,detector,img_height=255,img_size=400):
 
     EMOTIONS = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
-    AGE = ['0-2', '13-20', '21-32', '33-48', '3-6', '49-53', '54+', '7-12']
+
+    data = imutils.resize(data,img_size)
     
     frameClone = data.copy()
     canvas = np.zeros((img_height, img_size, 3), dtype="uint8")
@@ -69,13 +61,11 @@ def process_data(data,age_model,mood_model,detector,img_height=255,img_size=400)
             (fX, fY, fW, fH) = rect 
 
             roi = data[fY:fY + fH, fX:fX + fW]
-            input_mood,input_age,input_gender = preprocess_frame(roi)
+            input_mood = preprocess_frame(roi)
 
             preds_mood = inference_tflite_model(mood_model,input_mood)[0]
-            preds_age = inference_tflite_model(age_model,input_age)[0]
     
             label = EMOTIONS[preds_mood.argmax()]
-            label_age = AGE[preds_age.argmax()]
 
             if o == 0:
                 for (i, (emotion, prob)) in enumerate(zip(EMOTIONS, preds_mood)):
@@ -88,9 +78,9 @@ def process_data(data,age_model,mood_model,detector,img_height=255,img_size=400)
                     (w, (i * 35) + 35), (0, 0, 255), -1)
                     cv2.putText(canvas, text, (10, (i * 35) + 23),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.45,
-                    (255, 255, 255), 2)
+                    (255, 255, 255), 1, cv2.LINE_AA)
 
-            text_all = f'Face {o+1} {label} {preds_mood.max()*100:.2f}% {label_age}'
+            text_all = f'Face {o+1} {label} {preds_mood.max()*100:.2f}%'
             pos = o+1
 
             if (o % 2) == 0:
@@ -112,10 +102,8 @@ def getdata(type,mood_model=None,model_age=None,detector_path=None,input_path=No
     img_size=400
     img_height=255
 
-    # model = getmodel(model_path)
-    age_model = load_tflite_model(model_age)
-    mood_model = load_tflite_model(mood_model)
-    
+
+    mood_model = load_tflite_model(mood_model)    
     detector =detectface(detector_path)
 
     # Input is an image
@@ -128,7 +116,7 @@ def getdata(type,mood_model=None,model_age=None,detector_path=None,input_path=No
         for path in path_list:
             data = cv2.imread(path)
 
-            pred_data,canvas,label = process_data(data,age_model,mood_model,detector,img_height,img_size)
+            pred_data,canvas,label = process_data(data,mood_model,detector,img_height,img_size)
 
             cv2.imshow("Face", pred_data)
             cv2.imshow("Probabilities", canvas)
@@ -181,8 +169,7 @@ def getdata(type,mood_model=None,model_age=None,detector_path=None,input_path=No
                 print('End of Video...')
                 break
 
-            pred_data,canvas,label = process_data(data,age_model,mood_model,detector,img_height,img_size)
-
+            pred_data,canvas,label = process_data(data,mood_model,detector,img_height,img_size)
             cv2.imshow("Face", pred_data)            
             cv2.imshow("Probabilities Of Face 1", canvas)
 

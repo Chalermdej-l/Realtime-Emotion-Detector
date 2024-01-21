@@ -18,6 +18,12 @@ predict-vid-lite:
 predict-live-lite:
 	python flow/predict_prod_lite.py -t 'live' -m_m ${model_path_lite_mood} -m_a ${model_path_lite_age} -d ${detector_path} -i '' -o ${output_path_vid}
 
+predict-img-prod:
+	python flow/predict_prod_func.py -i ${input_path_img} -o ${output_path_img} -m 'img' -u ${URL}
+
+predict-vid-prod:
+	python flow/predict_prod_func.py -i ${input_path_vid} -o ${output_path_vid} -m 'vid' -u ${URL}
+
 docker-run:
 	docker run -d -i --rm -p 8080:8080 ${IMAGE_NAME}
 
@@ -68,5 +74,5 @@ infra-output:
 	terraform -chdir=./infra output  -raw function_endpoint
 
 prerequisite:
-	pip install -r  requirement.txt
+	pip install -r  requirement/requirement-train.txt
 
