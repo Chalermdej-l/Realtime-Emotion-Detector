@@ -68,7 +68,11 @@ to install the package required.
 
 Once all package is installed please follow the step in [Reproducre](/other) to re-create the project
 
+See the below video for the step and use case of the project
+
+https://www.youtube.com/watch?v=aTsFIArZrRc'
+
 ## Further Improvements
-Improve model accuracy the current model achieve about 70 percent accuracy
+Improve model accuracy the current model achieves about 70 percent accuracy
 
 Add additional analysis to the function like age and gender prediction.
