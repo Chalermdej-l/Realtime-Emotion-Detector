@@ -74,5 +74,5 @@ infra-output:
 	terraform -chdir=./infra output  -raw function_endpoint
 
 prerequisite:
-	pip install -r  requirement/requirement-train.txt
+	pip install -r  requirement/requirements-train.txt
 

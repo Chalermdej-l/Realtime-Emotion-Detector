@@ -126,8 +126,8 @@ def getdata(type,mood_model=None,model_age=None,detector_path=None,input_path=No
 
             filename = path.split(os.path.sep)[-1]
             filename = label + '_' + filename
-            output_path = output_path+ '//'+ filename
-            cv2.imwrite(filename=output_path,img=pred_data)
+            new_path = output_path+ '//'+ filename
+            cv2.imwrite(filename=new_path,img=pred_data)
             
     
     # Input is  video
@@ -152,9 +152,9 @@ def getdata(type,mood_model=None,model_age=None,detector_path=None,input_path=No
             filename = 'live'
             fourcc = cv2.VideoWriter_fourcc(*'mp4v')  
 
-            output_path = output_path+ '//'+ f'output_{filename}.mp4'
+            new_path = output_path+ '//'+ f'output_{filename}.mp4'
 
-            output_video = cv2.VideoWriter(output_path, fourcc, 30.0, (img_size,300))
+            output_video = cv2.VideoWriter(new_path, fourcc, 30.0, (img_size,300))
 
             camera = cv2.VideoCapture(0)
 

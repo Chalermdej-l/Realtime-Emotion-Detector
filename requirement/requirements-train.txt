@@ -2,9 +2,9 @@ tensorflow
 opencv-python
 numpy
 imutils
-tflite-runtime
-PIL
+pillow
 scikit-learn
 keras
 matplotlib
 argparse
+# tflite-runtime
