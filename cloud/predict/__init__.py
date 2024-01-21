@@ -85,7 +85,6 @@ def detectface(model_path):
 def process_data(data,mood_model,detector,img_size=400):
    
     EMOTIONS = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
-    AGE = ['0-2', '13-20', '21-32', '33-48', '3-6', '49-53', '54+', '7-12']
 
     data = imutils.resize(data,img_size)  
     frameClone = data.copy() 
@@ -120,8 +119,8 @@ def getdata(type,fp_name):
 
     img_size=400
 
-    mood_model = './model/keras/mood_model.tflite'
-    detector_path = './model/haarcascade/haarcascade_frontalface_default.xml'
+    mood_model = './model/mood_model.tflite'
+    detector_path = './model/haarcascade_frontalface_default.xml'
 
     logging.info('Loading model...')
     detector =detectface(detector_path)

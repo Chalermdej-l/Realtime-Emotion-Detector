@@ -9,4 +9,4 @@ ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
 COPY requirement/requirements.txt /
 RUN pip install -r /requirements.txt
 
-COPY ./cloud/docker /home/site/wwwroot
+COPY ./cloud /home/site/wwwroot
