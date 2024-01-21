@@ -23,14 +23,14 @@ make prerequisite
 
 Download the data from [FER2013](https://www.kaggle.com/datasets/msambare/fer2013)
 
-After downloading the data, use the [code](code/mood-experiment.ipynb) to train the model. Note that training time may vary depending on your machine; however, with a GPU-equipped PC, training shouldn't take too long.
+After downloading the data, use the [code](/code/mood-experiment.ipynb) to train the model. Note that training time may vary depending on your machine; however, with a GPU-equipped PC, training shouldn't take too long.
 
 I have included the model in the following download links for
 [Emotion detection](https://drive.google.com/file/d/1iTQrqv1XeZSz1rGgYEe5WADyVFPYRhz6/view?usp=drive_link) and [Face detection](https://drive.google.com/file/d/1uNAEKGE8q3WbcL6RkSL-K5E8wnViwZeb/view?usp=drive_link)
 
 The face detection model is pretrained and sourced from this [Github](https://github.com/opencv/opencv/tree/master/data/haarcascades)
 
-Once the model is trained, please place the model in this [Folder](cloud/model)
+Once the model is trained, please place the model in this [Folder](/cloud/model)
 
 ![](/image/setup/1.png)
 
@@ -102,9 +102,9 @@ make infra-output
 ```
 ![](/image/setup/13.png)
 
-Please update the URL in the [.env](.env) file.
+Please update the URL in the [.env](/.env) file.
 
-To call the function, you will need some sample images or videos in this [folder](input)
+To call the function, you will need some sample images or videos in this [folder](/input)
 
 To process the image to the cloud, please run the following command:
 
@@ -121,7 +121,7 @@ The request will be processed by the function and returned to the caller:
 
 ![](/image/setup/15.png)
 
-The file will be output in this [folder](output)
+The file will be output in this [folder](/output)
 
 ![](/image/setup/19.png)
 
