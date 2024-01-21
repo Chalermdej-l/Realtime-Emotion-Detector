@@ -30,7 +30,7 @@ This project used the tool below.
 
 ## Project Flow
 
-![Project Flow](/image/setup/project-flow.jpeg)
+![Project Flow](/image/other/projectflow.jpeg)
 
 ### 1. Download Data and Train Model
 
