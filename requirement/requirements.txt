@@ -1,0 +1,5 @@
+azure-functions
+opencv-python
+numpy
+imutils
+tflite-runtime

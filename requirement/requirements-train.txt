@@ -1,0 +1,9 @@
+tensorflow
+opencv-python
+numpy
+imutils
+tflite-runtime
+PIL
+scikit-learn
+keras
+matplotlib
