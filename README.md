@@ -24,7 +24,7 @@ This project used the tool below.
 - Containerization: Docker and Docker-compose (for containerized deployment and management)
 - Cloud Storage: Azure Blob Storage (for data storage)
 - API Endpoint: Azure Function (for front-end deployment)
-- model registry: Azure Container registry (for model management)
+- Model registry: Azure Container registry (for model management)
 - Reproducibility: Makefile (for ease of project reproducibility)
 - Machine Learning: TensorFlow and Keras (for model prediction)
 
@@ -34,19 +34,19 @@ This project used the tool below.
 
 ### 1. Download Data and Train Model
 
-Begin by downloading the data from Kaggle and training the model; some of the experiment performance can be found in this [folder](/code). The project uses OpenCV to process the image and employs TensorFlow + Keras for model training. After the model is trained, we convert it into TensorFlow Lite to enhance performance in production
+Begin by downloading the data from Kaggle and training the model; some of the experiments can be found in this [folder](/code). The project uses OpenCV to process the image and employs TensorFlow + Keras for model training. After the model is trained, we convert it into TensorFlow Lite to enhance performance in production
 
 ### 2. Preprocess and Containerize Model
 
-Create a [script](flow/predict_prod_lite.py) to preprocess the data. This script should leverage OpenCV for image processing and TensorFlow Lite for model inference. And a [script](cloud/predict/__init__.py) for cloud deployment. Then dockerize the code and model as a Docker container.
+Then use a [script](flow/predict_prod_lite.py) to preprocess the data. This script uses OpenCV for image processing and TensorFlow Lite for model inference. And a [script](cloud/predict/__init__.py) for cloud deployment. The project then gets dockerized as a [Docker container](/docker/model.Dockerfile).
 
 ### 3. Cloud Deployment and Frontend
 
-Provision essential resources, including an Azure Container Registry and an Azure Function, using [Terraform](infra/main.tf). Then push the docker image from step 2 to the container registry and create a webhook to the Azure function for front-end deployment.
+Create essential resources, including an Azure Container Registry and an Azure Function, using [Terraform](infra/main.tf). The Docker image from step 2 then gets pushed to the container registry and creates a webhook to the Azure function for front-end deployment.
 
 ### 4. Frontend and Cloud Request
 
-Users can interact with the deployed Azure Function from step 2 by making requests and providing either image or video data inputs. Alternatively, they have the option to utilize the model locally using the [script](flow/predict_prod_lite.py) currently live video only works with local deployment.
+Users can interact with the deployed Azure Function from Step 2 by making requests and providing either image or video data inputs. Alternatively, they have the option to utilize the model locally using the [script](flow/predict_prod_lite.py) currently live web cam data only works with local deployment.
 
 ## Reproducibility
 
@@ -68,7 +68,7 @@ to install the package required.
 
 Once all package is installed please follow the step in [Reproducre](/other) to re-create the project
 
-See the below video for the step and use case of the project
+See the below video for the steps and use case of the project.
 
 https://www.youtube.com/watch?v=aTsFIArZrRc'
 
