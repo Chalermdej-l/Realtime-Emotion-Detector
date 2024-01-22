@@ -70,7 +70,7 @@ Once all package is installed please follow the step in [Reproducre](/other) to 
 
 See the below video for the steps and use case of the project.
 
-https://www.youtube.com/watch?v=aTsFIArZrRc'
+https://www.youtube.com/watch?v=aTsFIArZrRc
 
 ## Further Improvements
 Improve model accuracy the current model achieves about 70 percent accuracy
