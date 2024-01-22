@@ -1,3 +1,6 @@
+You can also watch the below video for project reproduction and use case 
+
+https://www.youtube.com/watch?v=aTsFIArZrRc
 
 # Table of Contents
 
@@ -25,10 +28,10 @@ Download the data from [FER2013](https://www.kaggle.com/datasets/msambare/fer201
 
 After downloading the data, use the [code](/code/mood-experiment.ipynb) to train the model. Note that training time may vary depending on your machine; however, with a GPU-equipped PC, training shouldn't take too long.
 
-I have included the model in the following download links for
-[Emotion detection](https://drive.google.com/file/d/1iTQrqv1XeZSz1rGgYEe5WADyVFPYRhz6/view?usp=drive_link) and [Face detection](https://drive.google.com/file/d/1uNAEKGE8q3WbcL6RkSL-K5E8wnViwZeb/view?usp=drive_link)
+I have included the model train in the following download links for
+[Emotion detection](https://drive.google.com/file/d/1iTQrqv1XeZSz1rGgYEe5WADyVFPYRhz6/view?usp=drive_link) and [Face detection](https://drive.google.com/file/d/1uNAEKGE8q3WbcL6RkSL-K5E8wnViwZeb/view?usp=drive_link) if you don't have time to train this.
 
-The face detection model is pretrained and sourced from this [Github](https://github.com/opencv/opencv/tree/master/data/haarcascades)
+The face detection model is pre-trained and sourced from this [Github](https://github.com/opencv/opencv/tree/master/data/haarcascades)
 
 Once the model is trained, please place the model in this [Folder](/cloud/model)
 
@@ -36,7 +39,7 @@ Once the model is trained, please place the model in this [Folder](/cloud/model)
 
 ## 2. Dockerize Model and Infrastructure Initialization
 
-After placing the trained model in the correct folder, run the following command to dockerize the code and the model:
+After placing the trained model in the [folder](/cloud/model), run the following command to dockerize the code and the model:
 
 ```
 make docker-build
@@ -50,7 +53,7 @@ make az-login
 ```
 ![](/image/setup/3.png)
 
-After login, run the following command to initialize the Terraform project. Note that you can change the settings in this [file](infra/variables.tfvars) 
+After login, run the following command to initialize the Terraform project. Note that you can change the settings in this [file](/infra/variables.tfvars) 
 
 ```
 make infra-setup
@@ -79,7 +82,7 @@ make docker-deploy
 
 ![](/image/setup/8.png)
 
-After the image is pushed, we can now create the rest of the resources. Run the following code to create Azure Function and other necessary resources:
+After the image is pushed, we can now create the rest of the resources. Run the following code to create Azure Function and other necessary resources like Blob storage, App Service plan etc. :
 
 ```
 make infra-create-func
@@ -91,7 +94,8 @@ The function is already set up with a webhook with our container registry:
 
 ![](/image/setup/11.png)
 
-And the image will be repulled every restart or update:
+The image will be repelled every restart or update occured:
+
 ![](/image/setup/12.png)
 
 ## 4. Cloud Usage
@@ -104,15 +108,15 @@ make infra-output
 
 Please update the URL in the [.env](/.env) file.
 
-To call the function, you will need some sample images or videos in this [folder](/input)
+To call the function, you will need some sample input data either images or videos in this [input folder](/input)
 
-To process the image to the cloud, please run the following command:
+To process the image to the cloud, please run the following command this command will send a post request to our function with the image input data attached.:
 
 ```
 make predict-img-prod
 ```
 
-To process the video to the cloud, please run the following command:
+To process the video to the cloud, please run the following command this command will send a post request to our function with the video input data attached.:
 ```
 make predict-vid-prod
 ```
@@ -121,7 +125,7 @@ The request will be processed by the function and returned to the caller:
 
 ![](/image/setup/15.png)
 
-The file will be output in this [folder](/output)
+The file will be output in this [output folder](/output)
 
 ![](/image/setup/19.png)
 
@@ -155,7 +159,7 @@ make  infra-down-p
 ```
 ![](/image/setup/20.png)
 
-If there are no issues with the plan removal, run the following to remove all resources:
+If there are no issues with the planned removal, run the following to remove all resources:
 ```
 make  infra-down-c
 ```
